@@ -9,6 +9,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+      VITE_SHEET_ID: ${{ secrets.VITE_SHEET_ID }}
 
     steps:
       - name: Checkout code
@@ -18,20 +21,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Set environment variables
-        env:
-          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
-          VITE_SHEET_ID: ${{ secrets.VITE_SHEET_ID }}
-        run: echo "Environment variables set"
+      - name: Verify env (values hidden)
+        run: |
+          if [ -z "$VITE_API_KEY" ] || [ -z "$VITE_SHEET_ID" ]; then
+            echo "One or more VITE_* env vars are missing"; exit 1; fi
+          echo "Env present"
 
       - name: Build project
-        env:
-          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
-          VITE_SHEET_ID: ${{ secrets.VITE_SHEET_ID }}
         run: npm run build
 
       - name: Deploy to GitHub Pages
