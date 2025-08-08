@@ -23,11 +23,15 @@ jobs:
         run: npm install
 
       - name: Set environment variables
-        run: |
-          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
-          echo "VITE_SHEET_ID=${{ secrets.VITE_SHEET_ID }}" >> .env
+        env:
+          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+          VITE_SHEET_ID: ${{ secrets.VITE_SHEET_ID }}
+        run: echo "Environment variables set"
 
       - name: Build project
+        env:
+          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+          VITE_SHEET_ID: ${{ secrets.VITE_SHEET_ID }}
         run: npm run build
 
       - name: Deploy to GitHub Pages
