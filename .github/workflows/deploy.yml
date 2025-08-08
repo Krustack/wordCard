@@ -24,8 +24,8 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "VITE_API_KEY=${{ env.VITE_API_KEY }}" >> .env
-          echo "VITE_SHEET_ID=${{ env.VITE_SHEET_ID }}" >> .env
+          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
+          echo "VITE_SHEET_ID=${{ secrets.VITE_SHEET_ID }}" >> .env
 
       - name: Build project
         run: npm run build
