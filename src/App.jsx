@@ -1,6 +1,6 @@
 import Main from "./components/Main.jsx";
 
-import "./App.css";
+import "./app.css";
 import Navbar from "./components/Navbar.jsx";
 
 import { fetchData } from "./util/connect.js";
